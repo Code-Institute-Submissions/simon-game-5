@@ -1,0 +1,272 @@
+var playerCount = [];
+var simonCount = [];
+var levels = 0;
+const numOfLevels = 20;
+var strictMode = false;
+var error = false;
+var errorCount = 0;
+var id;
+var colors = [
+    "#009900",
+    "#0099ff",
+    "#ff00ff",
+    "#ff3300",
+    "#ff0000",
+    "#ffff00"
+];
+var buttonSounds = [
+    "assets/sounds/btn0.wav",
+    "assets/sounds/btn1.wav",
+    "assets/sounds/btn2.wav",
+    "assets/sounds/btn3.wav",
+    "assets/sounds/btn4.wav",
+    "assets/sounds/btn5.wav"
+];
+var otherSounds = [
+    "assets/sounds/win.mp3",
+    "assets/sounds/best.mp3",
+    "assets/sounds/lost.mp3",
+    "assets/sounds/start.mp3",
+    "assets/sounds/strict.mp3"
+];
+
+
+
+
+$(document).ready(function() {
+
+    //Start the game
+    $(".start").click(function() {
+        strictMode = false;
+        playOtherSound(3);
+        $(".start").addClass("switch-active");
+        $(".strict").removeClass("switch-active");
+        $(".btn").removeClass("click-disabled").addClass("click-enabled");
+
+        if (levels > 0) {
+            playerCount = [];
+            simonCount = [];
+            levels = 1;
+            error = false;
+            delayGamePattern(500);
+        }
+        else if (levels == 0) {
+            levels++;
+            delayGamePattern(500);
+        };
+    });
+
+    //Start the game in strict mode(no mistakes allowed)
+    $(".strict").click(function() {
+        strictMode = true;
+        playOtherSound(4);
+        $(".start").removeClass("switch-active")
+        $(".strict").addClass("switch-active");
+        $(".btn").removeClass("click-disabled").addClass("click-enabled");
+
+        if (levels > 0) {
+            playerCount = [];
+            simonCount = [];
+            levels = 1;
+            error = false;
+            delayGamePattern(500);
+        }
+        else if (levels == 0) {
+            levels++;
+            delayGamePattern(500);
+        };
+    });
+
+
+    //When button clicked
+    $(".btn").click(function() {
+        id = $(this).attr("id");
+        playButtonSound(id);
+        $(this).css("background-color", colors[id]);
+        setTimeout(function() {
+            $("#" + id).css("background-color", "#111");
+        }, 200);
+        playerCount.push(+id);
+        
+        //When player makes a mistake
+        if(playerCountCheck() == false) {
+            errorCount++;
+            //Reset game when player makes 3 mistakes during the same level
+            if(errorCount == 3) {
+                playOtherSound(2);
+                displayError();
+                errorCount = 0;
+                delayGameReset();
+                
+            } //Reset game when player makes any mistake provided the game is started in strict mode
+            else if(errorCount == 1 && strictMode == true) {
+                playOtherSound(2);
+                displayError();
+                errorCount = 0;
+                delayGameReset();
+            } //If above conditions not true, inform the player a mistake was made and play the whole game pattern up until the current level allowing for another chance
+            else {
+                displayError();
+                error = true;
+                playerCount = [];
+                delayGamePattern(1200);
+            }
+        } 
+        else if(playerCountCheck() == true) {
+            error = false;
+        }
+        
+        //Winning conditions for the game and what happens when a player has won
+        if(playerCount.length == numOfLevels) {
+            wonGame();
+        }
+        
+        //Check to see if player's pattern matches the game's and if it's not equal to the number of levels. Proceed to the next level
+        setTimeout(function() {
+            if (playerCount.length == simonCount.length && playerCount.length !== numOfLevels) {
+                levels++;
+                errorCount = 0;
+                playerCount = [];
+                gamePattern();
+            };
+        }, 900);
+    });
+});
+
+
+
+//Responsible for creating and playing the game's button pattern by taking a randomly generated number and based on that, picking a button to light up
+function gamePattern() {
+    $(".counter").text(levels);
+
+    if (error == false) {
+        generateRandomNumber();
+    };
+
+    var i = 0;
+    var intervalId = setInterval(function() {
+        id = simonCount[i];
+        playButtonSound(id);
+        $(".btn").removeClass("click-enabled").addClass("click-disabled");
+        i++;
+        $("#" + id).css("background-color", colors[id]);
+        setTimeout(function() {
+            $("#" + id).css("background-color", "#111");
+        }, 500);
+
+        if (i >= simonCount.length) {
+            clearInterval(intervalId);
+            $(".btn").removeClass("click-disabled").addClass("click-enabled");
+        }
+    }, 700);
+};
+
+
+//Generates random number then adds it to the gameCount array 
+function generateRandomNumber() {
+    var randomNum = Math.floor(Math.random() * 6);
+    simonCount.push(randomNum);
+};
+
+
+//Check if the players input matches the game's pattern for all items in the array
+function playerCountCheck() {
+    for (var i = 0; i < playerCount.length; i++) {
+        if (playerCount[i] != simonCount[i]) {
+            return false;
+        };
+    };
+    return true;
+};
+
+
+//Inform the player a mistake was made
+function displayError() {
+    $(".btn").removeClass("click-enabled").addClass("click-disabled");
+
+    if (errorCount == 3 || strictMode == true) {
+        $(".counter").text("LOST");
+    }
+    else {
+        $(".counter").text("--");
+    }
+
+    var count = 0;
+    var intervalId = setInterval(function() {
+        if ($(".counter").hasClass("hidden")) {
+            $(".counter").removeClass("hidden").addClass("visible");
+            count++;
+            if (count == 2) {
+                clearInterval(intervalId);
+            }
+        }
+        else {
+            $(".counter").removeClass("visible").addClass("hidden");
+        }
+    }, 300);
+};
+
+//Reset game and begin a new pattern
+function resetGame() {
+    playerCount = [];
+    simonCount = [];
+    levels = 1;
+    error = false;
+    gamePattern();
+};
+
+//Choose sounds to play from arrays of sounds
+function playButtonSound(id) {
+    var btnSound = new Audio(buttonSounds[id]);
+    btnSound.play();
+};
+
+function playOtherSound(x) {
+    var sound = new Audio(otherSounds[x]);
+    sound.play();
+};
+
+//Inform the player the game has been won
+function wonGame() {
+    $(".counter").text("WIN");
+    
+    var i = 0;
+    var winSound = new Audio(otherSounds[0]);
+    winSound.play();
+
+    var myInterval = setInterval(function() {
+        $(".btn").removeClass("click-enabled").addClass("click-disabled");
+        $(".start").removeClass("switch-active").removeClass("click-enabled").addClass("click-disabled");
+        $(".strict").removeClass("switch-active").removeClass("click-enabled").addClass("click-disabled");
+        var colorNum = simonCount[i];
+        $(".counter").css("color", colors[colorNum]);
+        i++;
+        if(i == simonCount.length) {
+            i = 0;
+        }
+        if(winSound.paused) {
+            clearInterval(myInterval);
+            $(".counter").css("color", "white");
+            $(".start").removeClass("click-disabled").addClass("click-enabled");
+            $(".strict").removeClass("click-disabled").addClass("click-enabled");
+        }
+    }, 300);
+    setTimeout(function() {
+        winSound.pause();
+    }, 9999)
+};
+
+//Delay pattern
+function delayGamePattern(time) {
+    setTimeout(function() {
+        gamePattern();
+    }, time);
+};
+
+//Delay reset
+function delayGameReset(){
+    setTimeout(function() {
+        resetGame();
+    }, 1200);
+}
+
