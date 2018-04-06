@@ -1,5 +1,5 @@
 var playerCount = [];
-var simonCount = [];
+var gameCount = [];
 var levels = 0;
 const numOfLevels = 20;
 var strictMode = false;
@@ -45,7 +45,7 @@ $(document).ready(function() {
 
         if (levels > 0) {
             playerCount = [];
-            simonCount = [];
+            gameCount = [];
             levels = 1;
             error = false;
             delayGamePattern(500);
@@ -66,7 +66,7 @@ $(document).ready(function() {
 
         if (levels > 0) {
             playerCount = [];
-            simonCount = [];
+            gameCount = [];
             levels = 1;
             error = false;
             delayGamePattern(500);
@@ -123,7 +123,7 @@ $(document).ready(function() {
         
         //Check to see if player's pattern matches the game's and if it's not equal to the number of levels. Proceed to the next level
         setTimeout(function() {
-            if (playerCount.length == simonCount.length && playerCount.length !== numOfLevels) {
+            if (playerCount.length == gameCount.length && playerCount.length !== numOfLevels) {
                 levels++;
                 errorCount = 0;
                 playerCount = [];
@@ -145,7 +145,7 @@ function gamePattern() {
 
     var i = 0;
     var intervalId = setInterval(function() {
-        id = simonCount[i];
+        id = gameCount[i];
         playButtonSound(id);
         $(".btn").removeClass("click-enabled").addClass("click-disabled");
         i++;
@@ -154,7 +154,7 @@ function gamePattern() {
             $("#" + id).css("background-color", "#111");
         }, 500);
 
-        if (i >= simonCount.length) {
+        if (i >= gameCount.length) {
             clearInterval(intervalId);
             $(".btn").removeClass("click-disabled").addClass("click-enabled");
         }
@@ -165,14 +165,14 @@ function gamePattern() {
 //Generates random number then adds it to the gameCount array 
 function generateRandomNumber() {
     var randomNum = Math.floor(Math.random() * 6);
-    simonCount.push(randomNum);
+    gameCount.push(randomNum);
 };
 
 
 //Check if the players input matches the game's pattern for all items in the array
 function playerCountCheck() {
     for (var i = 0; i < playerCount.length; i++) {
-        if (playerCount[i] != simonCount[i]) {
+        if (playerCount[i] != gameCount[i]) {
             return false;
         };
     };
@@ -209,7 +209,7 @@ function displayError() {
 //Reset game and begin a new pattern
 function resetGame() {
     playerCount = [];
-    simonCount = [];
+    gameCount = [];
     levels = 1;
     error = false;
     gamePattern();
@@ -238,10 +238,10 @@ function wonGame() {
         $(".btn").removeClass("click-enabled").addClass("click-disabled");
         $(".start").removeClass("switch-active").removeClass("click-enabled").addClass("click-disabled");
         $(".strict").removeClass("switch-active").removeClass("click-enabled").addClass("click-disabled");
-        var colorNum = simonCount[i];
+        var colorNum = gameCount[i];
         $(".counter").css("color", colors[colorNum]);
         i++;
-        if(i == simonCount.length) {
+        if(i == gameCount.length) {
             i = 0;
         }
         if(winSound.paused) {
