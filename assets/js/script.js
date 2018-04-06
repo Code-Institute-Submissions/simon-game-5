@@ -1,18 +1,18 @@
 var playerCount = [];
 var gameCount = [];
 var levels = 0;
-const numOfLevels = 20;
+const numOfLevels = 10;
 var strictMode = false;
 var error = false;
 var errorCount = 0;
 var id;
 var colors = [
-    "#009900",
-    "#0099ff",
-    "#ff00ff",
-    "#ff3300",
-    "#ff0000",
-    "#ffff00"
+    "#0059FF",
+    "#5DFF00",
+    "#C300FF",
+    "#FFE100",
+    "#FF0000",
+    "#FF6A00"
 ];
 var buttonSounds = [
     "assets/sounds/btn0.wav",
@@ -48,11 +48,11 @@ $(document).ready(function() {
             gameCount = [];
             levels = 1;
             error = false;
-            delayGamePattern(500);
+            gamePattern();
         }
         else if (levels == 0) {
             levels++;
-            delayGamePattern(500);
+            gamePattern();
         };
     });
 
@@ -69,11 +69,11 @@ $(document).ready(function() {
             gameCount = [];
             levels = 1;
             error = false;
-            delayGamePattern(500);
+            gamePattern();
         }
         else if (levels == 0) {
             levels++;
-            delayGamePattern(500);
+            gamePattern();
         };
     });
 
@@ -109,7 +109,7 @@ $(document).ready(function() {
                 displayError();
                 error = true;
                 playerCount = [];
-                delayGamePattern(1200);
+                delayGamePattern();
             }
         } 
         else if(playerCountCheck() == true) {
@@ -122,14 +122,12 @@ $(document).ready(function() {
         }
         
         //Check to see if player's pattern matches the game's and if it's not equal to the number of levels. Proceed to the next level
-        setTimeout(function() {
-            if (playerCount.length == gameCount.length && playerCount.length !== numOfLevels) {
-                levels++;
-                errorCount = 0;
-                playerCount = [];
-                gamePattern();
-            };
-        }, 900);
+        if (playerCount.length == gameCount.length && playerCount.length !== numOfLevels) {
+            levels++;
+            errorCount = 0;
+            playerCount = [];
+            gamePattern();
+        };
     });
 });
 
@@ -158,7 +156,7 @@ function gamePattern() {
             clearInterval(intervalId);
             $(".btn").removeClass("click-disabled").addClass("click-enabled");
         }
-    }, 700);
+    }, 800);
 };
 
 
@@ -256,14 +254,14 @@ function wonGame() {
     }, 9999)
 };
 
-//Delay pattern
-function delayGamePattern(time) {
+//Delay pattern so that error has time to play
+function delayGamePattern() {
     setTimeout(function() {
         gamePattern();
-    }, time);
+    }, 1200);
 };
 
-//Delay reset
+//Delay reset so that error has time to play
 function delayGameReset(){
     setTimeout(function() {
         resetGame();

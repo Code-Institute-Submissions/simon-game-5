@@ -6,6 +6,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
 }
 
 h1 {
@@ -87,33 +88,33 @@ h1 {
 
 .one {
     margin-right: 50px;
-    border: 5px solid #009900;
+    border: 5px solid #0047CC;
 
 }
 
 .two {
     /*margin-right: 100px;*/
-    border: 5px solid #0099ff;
+    border: 5px solid #4ACC00;
 
 }
 
 .three {
-    border: 5px solid #ff00ff;
+    border: 5px solid #9C00CC;
 }
 
 .four {
-    border: 5px solid #ff3300;
+    border: 5px solid #CCB400;
     
 }
 
 .five {
     margin-right: 50px;
-    border: 5px solid #ff0000;
+    border: 5px solid #CC0000;
 }
 
 .six {
     /*margin-right: 100px;*/
-    border: 5px solid #ffff00;
+    border: 5px solid #CC5500;
 }
 
 .switch {
