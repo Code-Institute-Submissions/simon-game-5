@@ -1,7 +1,7 @@
 var playerCount = [];
 var gameCount = [];
 var levels = 0;
-const numOfLevels = 20;
+const numOfLevels = 10;
 var strictMode = false;
 var error = false;
 var errorCount = 0;
@@ -136,9 +136,9 @@ $(document).ready(function() {
 //Responsible for creating and playing the game's button pattern by taking a randomly generated number and based on that, picking a button to light up
 function gamePattern() {
     $(".counter").text(levels);
-    
+
     if (error == false) {
-        gameCount.push(generateRandomNumber());
+        generateRandomNumber();
     };
 
     var i = 0;
@@ -163,8 +163,7 @@ function gamePattern() {
 //Generates random number then adds it to the gameCount array 
 function generateRandomNumber() {
     var randomNum = Math.floor(Math.random() * 6);
-    return randomNum;
-    
+    gameCount.push(randomNum);
 };
 
 
