@@ -6,6 +6,6 @@ describe("generateRandomNumber function", function() {
 
 describe("playerCountCheck function", function() {
     it("should return true if the playerCount array matches the gameCount array", function() {
-        expect(playerCountCheck()).toBeTruthy();
+        expect(playerCountCheck()).toBe(true);
     });
 });
