@@ -34,9 +34,10 @@ var otherSounds = [
 
 
 $(document).ready(function() {
-
+    
     //Start the game
     $(".start").click(function() {
+        
         strictMode = false;
         playOtherSound(3);
         $(".start").addClass("switch-active");
@@ -54,6 +55,8 @@ $(document).ready(function() {
             levels++;
             generateGamePattern();
         };
+        
+        remindPattern();
     });
 
     //Start the game in strict mode(no mistakes allowed)
@@ -74,8 +77,9 @@ $(document).ready(function() {
         else if (levels === 0) {
             levels++;
             generateGamePattern();
-            
         };
+        
+        remindPattern();
     });
 
 
@@ -136,6 +140,8 @@ $(document).ready(function() {
                 delayGenerateGamePattern();
             };
         };
+        
+        
     });
 });
 
@@ -146,14 +152,15 @@ Responsible for creating and playing the game's button pattern
 by taking a randomly generated number and based on that, picking a button to light up
 */
 function generateGamePattern() {
+        
     $(".counter").text(levels);
     
     if (error === false) {
         gameCount.push(generateRandomNumber());
     };
-
-    var i = 0;
     
+    var i = 0;
+        
     var intervalId = setInterval(function() {
         id = gameCount[i];
         playButtonSound(id);
@@ -163,7 +170,7 @@ function generateGamePattern() {
         setTimeout(function() {
             $("#" + id).css("background-color", "#111");
         }, 500);
-
+    
         if (i >= gameCount.length) {
             clearInterval(intervalId);
             $(".btn").removeClass("click-disabled").addClass("click-enabled");
@@ -182,7 +189,7 @@ function generateRandomNumber() {
 //Check if the players input matches the game's pattern for all items in the array
 function playerCountCheck() {
     for (var i = 0; i < playerCount.length; i++) {
-        if (playerCount[i] != gameCount[i]) {
+        if (playerCount[i] !== gameCount[i]) {
             return false;
         };
     };
@@ -269,6 +276,66 @@ function playWinSequence() {
         winSound.pause();
     }, 9999);
 };
+
+/*
+Repeats the game pattern if the user is idle for too long.
+5 seconds between repeats + 1.5 seconds for each item in the sequence 
+to allow the whole sequence to play out before it repeats again.
+*/
+function remindPattern() {
+    
+    var idleTime = 0;
+    //Resets idleTime on mouse movement to stop the pattern repeating indefinitely
+    $(document).mousemove(function(){
+        idleTime = 0;
+    })
+    /*
+    Increments idleTime and if idleTime is greater than 1, plays game 
+    pattern + flashes counter with "--" to signal to user to make a move.
+    */
+    function incrementTimer() {
+        idleTime++;
+        
+        if (idleTime > 1) {
+           error = true;
+           generateGamePattern();
+           
+           setTimeout(function(){
+               $(".counter").text(levels);
+           }, 1000)
+           
+           $(".counter").text("--");
+        };
+    };
+    
+    var duration = 0;
+    /*
+    Repeats the incrementTimer function constantly to allow it to check
+    if the user is idle and clears itself on start of new game not allowing multiple
+    instances of this function to run
+    */
+    function repeatIncrement() {
+        $(".start").click(function(){
+            clearTimeout(my_timeout);
+        });
+        $(".strict").click(function(){
+            clearTimeout(my_timeout);
+        });
+        
+        duration = 5000 + gameCount.length * 1500;
+        
+        incrementTimer();
+        
+        var my_timeout = setTimeout(function() {
+            repeatIncrement();
+        }, duration);
+    }
+    
+    var my_timeout = setTimeout(function() {
+        repeatIncrement();
+    }, duration);
+};
+
 
 //Delay pattern so that error has time to play
 function delayGenerateGamePattern() {
