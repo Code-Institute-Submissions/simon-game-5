@@ -5,6 +5,7 @@ const numOfLevels = 20;
 var strictMode = false;
 var error = false;
 var errorCount = 0;
+var gamePatternFinished;
 var id;
 var colors = [
     "#0059FF",
@@ -37,7 +38,6 @@ $(document).ready(function() {
     
     //Start the game
     $(".start").click(function() {
-        
         strictMode = false;
         playOtherSound(3);
         $(".start").addClass("switch-active");
@@ -113,6 +113,7 @@ $(document).ready(function() {
                 errorCount = 0;
                 playerCount = [];
                 generateGamePattern();
+                console.log(gamePatternFinished)
             };
         } else {
             errorCount++;
@@ -140,8 +141,6 @@ $(document).ready(function() {
                 delayGenerateGamePattern();
             };
         };
-        
-        
     });
 });
 
@@ -152,7 +151,6 @@ Responsible for creating and playing the game's button pattern
 by taking a randomly generated number and based on that, picking a button to light up
 */
 function generateGamePattern() {
-        
     $(".counter").text(levels);
     
     if (error === false) {
@@ -162,11 +160,14 @@ function generateGamePattern() {
     var i = 0;
         
     var intervalId = setInterval(function() {
+        gamePatternFinished = false;
         id = gameCount[i];
         playButtonSound(id);
+        
         $(".btn").removeClass("click-enabled").addClass("click-disabled");
         i++;
         $("#" + id).css("background-color", colors[id]);
+        
         setTimeout(function() {
             $("#" + id).css("background-color", "#111");
         }, 500);
@@ -174,6 +175,7 @@ function generateGamePattern() {
         if (i >= gameCount.length) {
             clearInterval(intervalId);
             $(".btn").removeClass("click-disabled").addClass("click-enabled");
+            gamePatternFinished = true;
         };
     }, 800);
 };
@@ -279,61 +281,65 @@ function playWinSequence() {
 
 /*
 Repeats the game pattern if the user is idle for too long.
-5 seconds between repeats + 1.5 seconds for each item in the sequence 
-to allow the whole sequence to play out before it repeats again.
+Checks if the gamePattern has finished displaying, if it has, waits 7 seconds before repeating it 
 */
 function remindPattern() {
-    
+
     var idleTime = 0;
+    
     //Resets idleTime on mouse movement to stop the pattern repeating indefinitely
     $(document).mousemove(function(){
         idleTime = 0;
     })
+    
     /*
     Increments idleTime and if idleTime is greater than 1, plays game 
     pattern + flashes counter with "--" to signal to user to make a move.
     */
-    function incrementTimer() {
+    function incrementIdleTime() {
+
         idleTime++;
-        
-        if (idleTime > 1) {
-           error = true;
-           generateGamePattern();
-           
-           setTimeout(function(){
-               $(".counter").text(levels);
-           }, 1000)
-           
-           $(".counter").text("--");
-        };
+            
+        if(idleTime > 1) {
+            error = true;
+            generateGamePattern();
+               
+            setTimeout(function(){
+                $(".counter").text(levels);
+            }, 1000)
+               
+            $(".counter").text("--");
+        }
     };
-    
+
     var duration = 0;
+    
     /*
-    Repeats the incrementTimer function constantly to allow it to check
+    Repeats the incrementIdleTime function constantly to allow it to check
     if the user is idle and clears itself on start of new game not allowing multiple
     instances of this function to run
     */
     function repeatIncrement() {
+
         $(".start").click(function(){
             clearTimeout(my_timeout);
         });
         $(".strict").click(function(){
             clearTimeout(my_timeout);
         });
-        
-        duration = 5000 + gameCount.length * 1500;
-        
-        incrementTimer();
-        
+            
+        if(gamePatternFinished === true){
+            incrementIdleTime();
+        }
+            
         var my_timeout = setTimeout(function() {
             repeatIncrement();
-        }, duration);
-    }
-    
+        }, 7000);
+    };
+        
     var my_timeout = setTimeout(function() {
         repeatIncrement();
-    }, duration);
+    }, 7000);
 };
 
 
