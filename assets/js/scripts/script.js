@@ -311,8 +311,6 @@ function remindPattern() {
             $(".counter").text("--");
         }
     };
-
-    var duration = 0;
     
     /*
     Repeats the incrementIdleTime function constantly to allow it to check
