@@ -23,13 +23,13 @@ Javascript and the Javascript library [JQuery](https://jquery.com/).
 
 Deployed to Github Pages 
 
-Link: [https://alexander4k.github.io/simongame/](https://alexander4k.github.io/simongame/).
+Link: [https://alexander4k.github.io/simon-game/](https://alexander4k.github.io/simon-game/).
 
 ## Testing 
 
 Tested on mobile, tablet and desktop devices for responsiveness and in different 
 browsers(Firefox, Microsoft Edge and Google Chrome) to test browser compatibility and 
-using [Jasmine](https://jasmine.github.io/pages/getting_started.html) a behaviordriven development framework 
+using [Jasmine](https://jasmine.github.io/pages/getting_started.html) a behavior driven development framework 
 for testing JavaScript code.
 
 ## Installation 
