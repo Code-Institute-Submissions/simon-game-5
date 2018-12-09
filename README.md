@@ -29,7 +29,7 @@ Link: [https://alexander4k.github.io/simongame/](https://alexander4k.github.io/s
 
 Tested on mobile, tablet and desktop devices for responsiveness and in different 
 browsers(Firefox, Microsoft Edge and Google Chrome) to test browser compatibility and 
-using [Jasmine](https://jasmine.github.io/pages/getting_started.html) a behaviordriven development framework 
+using [Jasmine](https://jasmine.github.io/pages/getting_started.html) a behavior driven development framework 
 for testing JavaScript code.
 
 ## Installation 
