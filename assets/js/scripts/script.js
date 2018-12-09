@@ -54,7 +54,7 @@ $(document).ready(function() {
         else if (levels === 0) {
             levels++;
             generateGamePattern();
-        };
+        }
         
         remindPattern();
     });
@@ -77,7 +77,7 @@ $(document).ready(function() {
         else if (levels === 0) {
             levels++;
             generateGamePattern();
-        };
+        }
         
         remindPattern();
     });
@@ -97,7 +97,7 @@ $(document).ready(function() {
          //Winning conditions for the game and what happens when a player has won
         if(playerCount.length === numOfLevels) {
             playWinSequence();
-        };
+        }
         
 
         //When player makes a mistake
@@ -113,8 +113,7 @@ $(document).ready(function() {
                 errorCount = 0;
                 playerCount = [];
                 generateGamePattern();
-                console.log(gamePatternFinished)
-            };
+            }
         } else {
             errorCount++;
             
@@ -139,8 +138,8 @@ $(document).ready(function() {
                 error = true;
                 playerCount = [];
                 delayGenerateGamePattern();
-            };
-        };
+            }
+        }
     });
 });
 
@@ -155,7 +154,7 @@ function generateGamePattern() {
     
     if (error === false) {
         gameCount.push(generateRandomNumber());
-    };
+    }
     
     var i = 0;
         
@@ -176,16 +175,16 @@ function generateGamePattern() {
             clearInterval(intervalId);
             $(".btn").removeClass("click-disabled").addClass("click-enabled");
             gamePatternFinished = true;
-        };
+        }
     }, 800);
-};
+}
 
 
 //Generates random number then adds it to the gameCount array 
 function generateRandomNumber() {
     var randomNum = Math.floor(Math.random() * 6);
     return randomNum;
-};
+}
 
 
 //Check if the players input matches the game's pattern for all items in the array
@@ -193,10 +192,10 @@ function playerCountCheck() {
     for (var i = 0; i < playerCount.length; i++) {
         if (playerCount[i] !== gameCount[i]) {
             return false;
-        };
-    };
+        }
+    }
     return true;
-};
+}
 
 
 //Inform the player a mistake was made
@@ -216,12 +215,12 @@ function displayError() {
             count++;
             if (count === 2) {
                 clearInterval(intervalId);
-            };
+            }
         } else {
             $(".counter").removeClass("visible").addClass("hidden");
         }
     }, 200);
-};
+}
 
 //Reset game and begin a new pattern
 function resetGame() {
@@ -230,18 +229,18 @@ function resetGame() {
     levels = 1;
     error = false;
     generateGamePattern();
-};
+}
 
 //Choose sounds to play from arrays of sounds
 function playButtonSound(id) {
     var btnSound = new Audio(buttonSounds[id]);
     btnSound.play();
-};
+}
 
 function playOtherSound(x) {
     var sound = new Audio(otherSounds[x]);
     sound.play();
-};
+}
 
 //Inform the player the game has been won
 function playWinSequence() {
@@ -264,20 +263,20 @@ function playWinSequence() {
         
         if(i === gameCount.length) {
             i = 0;
-        };
+        }
         
         if(winSound.paused) {
             clearInterval(myInterval);
             $(".counter").css("color", "white");
             $(".start").removeClass("click-disabled").addClass("click-enabled");
             $(".strict").removeClass("click-disabled").addClass("click-enabled");
-        };
+        }
     }, 300);
     
     setTimeout(function() {
         winSound.pause();
     }, 9999);
-};
+}
 
 /*
 Repeats the game pattern if the user is idle for too long.
@@ -290,7 +289,7 @@ function remindPattern() {
     //Resets idleTime on mouse movement to stop the pattern repeating indefinitely
     $(document).mousemove(function(){
         idleTime = 0;
-    })
+    });
     
     /*
     Increments idleTime and if idleTime is greater than 1, plays game 
@@ -306,11 +305,11 @@ function remindPattern() {
                
             setTimeout(function(){
                 $(".counter").text(levels);
-            }, 1000)
+            }, 1000);
                
             $(".counter").text("--");
         }
-    };
+    }
     
     /*
     Repeats the incrementIdleTime function constantly to allow it to check
@@ -332,13 +331,13 @@ function remindPattern() {
             
         var my_timeout = setTimeout(function() {
             repeatIncrement();
-        }, 7000);
-    };
+        }, 6000);
+    }
         
     var my_timeout = setTimeout(function() {
         repeatIncrement();
-    }, 7000);
-};
+    }, 6000);
+}
 
 
 //Delay pattern so that error has time to play
@@ -346,7 +345,7 @@ function delayGenerateGamePattern() {
     setTimeout(function() {
         generateGamePattern();
     }, 1200);
-};
+}
 
 //Delay reset so that error has time to play
 function delayGameReset(){
