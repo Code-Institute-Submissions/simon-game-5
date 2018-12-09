@@ -23,7 +23,7 @@ Javascript and the Javascript library [JQuery](https://jquery.com/).
 
 Deployed to Github Pages 
 
-Link: [https://alexander4k.github.io/simongame/](https://alexander4k.github.io/simongame/).
+Link: [https://alexander4k.github.io/simon-game/](https://alexander4k.github.io/simon-game/).
 
 ## Testing 
 
