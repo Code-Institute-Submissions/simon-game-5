@@ -11,6 +11,10 @@ Thee game features 6 buttons instead of 4 and 20 overall levels since I felt the
 
 Mockups in a pdf format and user stories can be found here [UX assets](assets/ux)
 
+The final version of the project differs from the mockups. 
+As I developed the project I would realize that some of the design decisions weren't 
+the right solutions and I would update them on the go.
+
 ## Features 
 
 * 6 buttons with unique colors and sounds.
@@ -39,12 +43,6 @@ Mockups in a pdf format and user stories can be found here [UX assets](assets/ux
   * Used for automated testing of game logic
 * [Markdown](https://en.wikipedia.org/wiki/Markdown)
   * Used for formatting user_stories.md and README.md
-
-## Deployment 
-
-Deployed to Github Pages 
-
-Link: [https://alexander4k.github.io/simon-game/](https://alexander4k.github.io/simon-game/).
 
 ## Testing 
 
@@ -108,7 +106,11 @@ browsers(Firefox, Microsoft Edge and Google Chrome) to test browser compatibilit
 * There is a slight delay before the button sounds play which can result in the sounds not playing at the right time if 
   buttons are pressed too quickly. Not addressed yet.
 
-## Installation 
+## Deployment 
+
+Deployed to Github Pages 
+
+Link: [https://alexander4k.github.io/simon-game/](https://alexander4k.github.io/simon-game/).
 
 Clone the repository by copying the clone url
 
