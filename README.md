@@ -110,13 +110,11 @@ browsers(Firefox, Microsoft Edge and Google Chrome) to test browser compatibilit
 
 Deployed to Github Pages 
 
-Link: [https://alexander4k.github.io/simon-game/](https://alexander4k.github.io/simon-game/).
+Link: [Simon](https://alexander4k.github.io/simon-game/).
 
-Clone the repository by copying the clone url
-
-In the terminal type `git clone` followed by the copied url
-
-`cd` into `simon-game` and open `index.html`
+* Clone the repository by copying the clone url
+* In the terminal type `git clone` followed by the copied url
+* `cd` into `simon-game` and open `index.html`
 
 ## Credits
 
