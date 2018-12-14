@@ -67,8 +67,8 @@ h1 {
 
 .btn {
     background-color: #111;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     display: inline-block;
     border-radius: 100%;
 }
@@ -88,31 +88,43 @@ h1 {
 
 .one {
     margin-right: 50px;
-    border: 5px solid #0047CC;
+    -webkit-box-shadow: inset 0px 0px 10px 4px rgba(0,71,204,1);
+    -moz-box-shadow: inset 0px 0px 10px 4px rgba(0,71,204,1);
+    box-shadow: inset 0px 0px 10px 4px rgba(0,71,204,1);
 
 }
 
 .two {
-    border: 5px solid #4ACC00;
+    -webkit-box-shadow: inset 0px 0px 10px 4px rgba(74,204,0,1);
+    -moz-box-shadow: inset 0px 0px 10px 4px rgba(74,204,0,1);
+    box-shadow: inset 0px 0px 10px 4px rgba(74,204,0,1);
 
 }
 
 .three {
-    border: 5px solid #9C00CC;
+    -webkit-box-shadow: inset 0px 0px 10px 4px rgba(156,0,204,1);
+    -moz-box-shadow: inset 0px 0px 10px 4px rgba(156,0,204,1);
+    box-shadow: inset 0px 0px 10px 4px rgba(156,0,204,1);
 }
 
 .four {
-    border: 5px solid #CCB400;
+    -webkit-box-shadow: inset 0px 0px 10px 4px rgba(204,180,0,1);
+    -moz-box-shadow: inset 0px 0px 10px 4px rgba(204,180,0,1);
+    box-shadow: inset 0px 0px 10px 4px rgba(204,180,0,1);
     
 }
 
 .five {
     margin-right: 50px;
-    border: 5px solid #CC0000;
+    -webkit-box-shadow: inset 0px 0px 10px 4px rgba(204,0,0,1);
+    -moz-box-shadow: inset 0px 0px 10px 4px rgba(204,0,0,1);
+    box-shadow: inset 0px 0px 10px 4px rgba(204,0,0,1);
 }
 
 .six {
-    border: 5px solid #CC5500;
+    -webkit-box-shadow: inset 0px 0px 10px 4px rgba(204,85,0,1);
+    -moz-box-shadow: inset 0px 0px 10px 4px rgba(204,85,0,1);
+    box-shadow: inset 0px 0px 10px 4px rgba(204,85,0,1);
 }
 
 .switch {
